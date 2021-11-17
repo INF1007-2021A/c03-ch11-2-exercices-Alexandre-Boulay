@@ -7,12 +7,13 @@ Classes pour représenter un magicien et ses pouvoirs magiques.
 
 import random
 
+import character
 import utils
 from character import *
 
 
 # TODO: Créer la classe Spell qui a les même propriétés que Weapon, mais avec un coût en MP pour l'utiliser
-class Spell:
+class Spell(Weapon):
 	"""
 	Un sort dans le jeu.
 
@@ -22,11 +23,14 @@ class Spell:
 	:param min_level: Le niveau minimal pour l'utiliser
 	"""
 
-	# TODO: __init__
-	pass
+	def __init__(self, mp_cost):
+		super().__init__("Weapon")
+		self. mp_cost = mp_cost
+
+
 
 # TODO: Déclarer la classe Magician qui étend la classe Character
-class Magician:
+class Magician(Character):
 	"""
 	Un utilisateur de magie dans le jeu. Un magicien peut utiliser des sorts, mais peut aussi utiliser des armes physiques. Sa capacité à utiliser des sorts dépend 
 
@@ -41,18 +45,29 @@ class Magician:
 	:ivar using_magic: Détermine si le magicien tente d'utiliser sa magie dans un combat.
 	"""
 
-	def __init__(self, name, max_hp, max_mp, attack, magic_attack, defense, level):
+	def __init__(self, name, hp, max_hp, mp, max_mp, attack, magic_attack, defense, level, spell, using_magic):
 		# TODO: Initialiser les attributs de Character
+		super().__init__("Character")
 		# TODO: Initialiser le `magic_attack` avec le paramètre, le `max_mp` et `mp` de la même façon que `max_hp` et `hp`, `spell` à None et `using_magic` à False.
-		pass
+		self.magic_attack = magic_attack
+		self.hp = hp
+		self.max_hp = max_hp
+		self.__mp = mp
+		self. max_mp = max_mp
+		self.spell = None
+		self.using_magic = False
 
 	@property
 	def mp(self):
-		pass
+		return self.__mp
 
 	@mp.setter
 	def mp(self, val):
-		pass
+		if val is None:
+			val = Weapon.make_unarmed()
+		if val.min_level > self.level:
+			raise ValueError(Weapon)
+		self.__weapon = val
 
 	# TODO: Écrire les getter/setter pour la propriété `spell`.
 	#       On peut affecter None.
